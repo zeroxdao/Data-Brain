@@ -12,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import router
+from app.api.orchestrator_routes import orch_router
 from app.config import get_settings
 
 settings = get_settings()
@@ -19,7 +20,7 @@ settings = get_settings()
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description="AI/ML 交易大脑 —— 桥接、市场环境分类与 EA 表现分析（阶段0+1）",
+    description="AI/ML 交易大脑 —— 桥接、市场环境分类、EA 环境表现分析、调度大脑（阶段0-2）",
 )
 
 app.add_middleware(
@@ -30,6 +31,7 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api")
+app.include_router(orch_router, prefix="/api")
 
 
 @app.get("/")
